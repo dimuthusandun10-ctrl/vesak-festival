@@ -1,0 +1,244 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: "Figtree", sans-serif;
+    --font-body: "DM Sans", sans-serif;
+    --font-mono: "Geist Mono", monospace;
+    --radius: 0.75rem;
+
+    --background: 0.98 0.02 105;
+    --foreground: 0.25 0.04 65;
+    --card: 0.99 0.02 100;
+    --card-foreground: 0.25 0.04 65;
+    --popover: 0.99 0.02 100;
+    --popover-foreground: 0.25 0.04 65;
+
+    --primary: 0.72 0.15 102;
+    --primary-foreground: 0.98 0 0;
+
+    --secondary: 0.68 0.18 65;
+    --secondary-foreground: 0.25 0.04 65;
+    --muted: 0.92 0.02 105;
+    --muted-foreground: 0.5 0.03 80;
+
+    --accent: 0.55 0.22 65;
+    --accent-foreground: 0.98 0 0;
+
+    --destructive: 0.55 0.22 25;
+    --destructive-foreground: 0.98 0 0;
+
+    --border: 0.94 0.02 100;
+    --input: 0.96 0.02 105;
+    --ring: 0.72 0.15 102;
+
+    --chart-1: 0.72 0.15 102;
+    --chart-2: 0.68 0.18 65;
+    --chart-3: 0.55 0.22 65;
+    --chart-4: 0.78 0.14 55;
+    --chart-5: 0.65 0.16 35;
+
+    --sidebar: 0.98 0.02 105;
+    --sidebar-foreground: 0.25 0.04 65;
+    --sidebar-primary: 0.72 0.15 102;
+    --sidebar-primary-foreground: 0.98 0 0;
+    --sidebar-accent: 0.92 0.02 105;
+    --sidebar-accent-foreground: 0.25 0.04 65;
+    --sidebar-border: 0.94 0.02 100;
+    --sidebar-ring: 0.72 0.15 102;
+  }
+
+  .dark {
+    --background: 0.18 0.02 100;
+    --foreground: 0.95 0.02 100;
+    --card: 0.22 0.02 105;
+    --card-foreground: 0.95 0.02 100;
+    --popover: 0.25 0.02 100;
+    --popover-foreground: 0.95 0.02 100;
+
+    --primary: 0.75 0.15 102;
+    --primary-foreground: 0.15 0.02 100;
+
+    --secondary: 0.7 0.18 65;
+    --secondary-foreground: 0.92 0.02 100;
+    --muted: 0.28 0.02 100;
+    --muted-foreground: 0.65 0.03 80;
+
+    --accent: 0.65 0.22 65;
+    --accent-foreground: 0.15 0.02 100;
+
+    --destructive: 0.65 0.19 22;
+    --destructive-foreground: 0.15 0.02 100;
+
+    --border: 0.32 0.02 100;
+    --input: 0.32 0.02 100;
+    --ring: 0.75 0.15 102;
+
+    --chart-1: 0.75 0.15 102;
+    --chart-2: 0.7 0.18 65;
+    --chart-3: 0.65 0.22 65;
+    --chart-4: 0.8 0.14 55;
+    --chart-5: 0.72 0.16 35;
+
+    --sidebar: 0.22 0.02 105;
+    --sidebar-foreground: 0.95 0.02 100;
+    --sidebar-primary: 0.75 0.15 102;
+    --sidebar-primary-foreground: 0.15 0.02 100;
+    --sidebar-accent: 0.28 0.02 100;
+    --sidebar-accent-foreground: 0.92 0.02 100;
+    --sidebar-border: 0.32 0.02 100;
+    --sidebar-ring: 0.75 0.15 102;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+@font-face {
+  font-family: "Figtree";
+  src: url("/assets/fonts/Figtree.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/assets/fonts/DMSans.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/assets/fonts/GeistMono.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+@layer utilities {
+  .card-soft {
+    @apply rounded-xl shadow-sm border border-amber-200/40 transition-smooth;
+  }
+
+  .btn-warm {
+    @apply bg-gradient-to-br from-primary via-primary to-secondary hover:shadow-md transition-smooth;
+  }
+
+  .text-warm {
+    @apply text-foreground;
+  }
+
+  /* Status badge utilities */
+  .badge-pending {
+    @apply bg-yellow-100 text-yellow-900 dark:bg-yellow-900/30 dark:text-yellow-200 px-2.5 py-1 rounded-full text-xs font-medium;
+  }
+
+  .badge-approved {
+    @apply bg-green-100 text-green-900 dark:bg-green-900/30 dark:text-green-200 px-2.5 py-1 rounded-full text-xs font-medium;
+  }
+
+  .badge-rejected {
+    @apply bg-red-100 text-red-900 dark:bg-red-900/30 dark:text-red-200 px-2.5 py-1 rounded-full text-xs font-medium;
+  }
+
+  /* Engagement utilities */
+  .btn-engagement {
+    @apply flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-smooth hover:bg-muted/60;
+  }
+
+  .btn-like {
+    @apply btn-engagement text-muted-foreground hover:text-primary;
+  }
+
+  .btn-comment {
+    @apply btn-engagement text-muted-foreground hover:text-primary;
+  }
+
+  .btn-report {
+    @apply btn-engagement text-muted-foreground hover:text-destructive;
+  }
+
+  /* Admin section styles */
+  .admin-section {
+    @apply bg-muted border border-border rounded-lg p-4 transition-smooth;
+  }
+
+  .admin-table {
+    @apply w-full text-sm;
+  }
+
+  .admin-table thead tr {
+    @apply border-b border-border bg-muted;
+  }
+
+  .admin-table tbody tr {
+    @apply border-b border-border hover:bg-muted transition-smooth;
+  }
+
+  .admin-table td {
+    @apply px-4 py-3;
+  }
+
+  /* Analytics card */
+  .analytics-card {
+    @apply bg-card border border-border rounded-lg p-4 space-y-2 shadow-sm hover:shadow-md transition-smooth;
+  }
+
+  .analytics-label {
+    @apply text-xs uppercase tracking-wider text-muted-foreground font-semibold;
+  }
+
+  .analytics-value {
+    @apply text-2xl font-bold text-foreground;
+  }
+
+  /* Category filter tabs */
+  .category-tabs {
+    @apply flex gap-2 overflow-x-auto pb-2 mb-4;
+  }
+
+  .category-tab {
+    @apply px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-smooth border border-border text-muted-foreground hover:border-primary;
+  }
+
+  .category-tab.active {
+    @apply bg-primary text-primary-foreground border-primary;
+  }
+
+  /* Favorites toggle */
+  .btn-favorite {
+    @apply transition-smooth;
+  }
+
+  /* Safe area for bottom nav */
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Keyboard-open: hide bottom nav when virtual keyboard is visible */
+  body.keyboard-open .bottom-nav {
+    transform: translateY(100%);
+    pointer-events: none;
+    transition: transform 0.2s ease;
+  }
+
+  /* Dynamic viewport height for modals — prevents keyboard overlap */
+  .modal-sheet {
+    max-height: calc(100dvh - env(safe-area-inset-bottom));
+  }
+
+  .btn-favorite.active {
+    @apply text-primary;
+  }
+}

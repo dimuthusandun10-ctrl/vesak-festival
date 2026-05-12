@@ -1,0 +1,383 @@
+type _ImmutableObjectStorageRefillResult = 
+ record {
+   success: opt bool;
+   topped_up_amount: opt nat;
+ };
+type _ImmutableObjectStorageRefillInformation = record {
+                                                  proposed_top_up_amount:
+                                                   opt nat;};
+type _ImmutableObjectStorageCreateCertificateResult = 
+ record {
+   blob_hash: text;
+   method: text;
+ };
+type UserProfile = 
+ record {
+   bio: text;
+   bioUpdatedAt: opt int;
+   displayName: text;
+   "principal": principal;
+   registeredAt: int;
+   role: Role;
+ };
+type UpdateDansalRequest = 
+ record {
+   category: opt text;
+   contactName: opt text;
+   contactPhone: opt text;
+   date: opt text;
+   district: opt text;
+   foodTypes: opt vec text;
+   latitude: opt float64;
+   locationLink: opt text;
+   longitude: opt float64;
+   organizerName: opt text;
+   province: opt text;
+   time: opt text;
+ };
+type Timestamp = int;
+type SubmitReportRequest = 
+ record {
+   description: opt text;
+   reason: variant {
+             fake;
+             inappropriate;
+             other;
+             spam;
+           };
+   targetId: nat;
+   targetType: ReportTargetType;
+ };
+type Role = 
+ variant {
+   admin;
+   organizer;
+   superAdmin;
+   user;
+ };
+type ReviewId = nat;
+type Review = 
+ record {
+   dansalId: nat;
+   id: ReviewId;
+   rating: nat;
+   reviewerName: text;
+   reviewerPrincipal: principal;
+   "text": text;
+   timestamp: Timestamp;
+ };
+type ReportTargetType = 
+ variant {
+   dansal;
+   photo;
+ };
+type ReportStatus = 
+ variant {
+   actioned;
+   dismissed;
+   pending;
+ };
+type ReportNote = 
+ record {
+   authorId: principal;
+   authorName: text;
+   createdAt: int;
+   id: NoteId;
+   reportId: ReportId;
+   "text": text;
+ };
+type ReportId = nat;
+type Report = 
+ record {
+   description: opt text;
+   id: ReportId;
+   reason: variant {
+             fake;
+             inappropriate;
+             other;
+             spam;
+           };
+   reporterPrincipal: principal;
+   status: ReportStatus;
+   targetId: nat;
+   targetType: ReportTargetType;
+   timestamp: int;
+ };
+type PhotoId = nat;
+type PhotoCommentId = nat;
+type PhotoComment = 
+ record {
+   authorName: text;
+   authorPrincipal: principal;
+   id: PhotoCommentId;
+   photoId: nat;
+   "text": text;
+   timestamp: Timestamp;
+ };
+type OrganizerPublicProfile = 
+ record {
+   avgRating: float64;
+   bio: text;
+   name: text;
+   "principal": principal;
+   totalDansals: nat;
+   totalLikes: nat;
+   totalViews: nat;
+ };
+type NoteId = nat;
+type LikeResult = 
+ record {
+   likeCount: nat;
+   liked: bool;
+ };
+type GalleryPhoto = 
+ record {
+   appreciationCount: nat;
+   caption: text;
+   id: PhotoId;
+   image: ExternalBlob;
+   likedBy: vec principal;
+   status: ApprovalStatus;
+   uploadedAt: int;
+   uploaderName: text;
+   uploaderPrincipal: principal;
+ };
+type ExternalBlob = blob;
+type DansalId = nat;
+type DansalFilter = 
+ record {
+   category: opt text;
+   district: opt text;
+   foodType: opt text;
+   province: opt text;
+   timeEnd: opt text;
+   timeStart: opt text;
+ };
+type DansalAnalytics = 
+ record {
+   appreciationCount: nat;
+   dansalId: nat;
+   likeCount: nat;
+   name: text;
+   viewCount: nat;
+ };
+type Dansal = 
+ record {
+   appreciationCount: nat;
+   category: text;
+   contactName: text;
+   contactPhone: text;
+   createdAt: int;
+   date: text;
+   district: text;
+   foodTypes: vec text;
+   id: DansalId;
+   latitude: float64;
+   likedBy: vec principal;
+   locationLink: text;
+   longitude: float64;
+   organizerName: text;
+   organizerPrincipal: principal;
+   province: text;
+   status: ApprovalStatus;
+   time: text;
+   viewCount: nat;
+ };
+type CommentId = nat;
+type Comment = 
+ record {
+   authorName: text;
+   authorPrincipal: principal;
+   dansalId: nat;
+   id: CommentId;
+   "text": text;
+   timestamp: Timestamp;
+ };
+type ApprovalStatus = 
+ variant {
+   approved;
+   pending;
+   rejected;
+ };
+type ApprovalNotification = 
+ record {
+   approvedAt: int;
+   id: nat;
+   seen: bool;
+   targetId: nat;
+   targetName: text;
+   targetType: ReportTargetType;
+ };
+type AddReviewRequest = 
+ record {
+   dansalId: nat;
+   rating: nat;
+   reviewerName: text;
+   "text": text;
+ };
+type AddReportNoteRequest = 
+ record {
+   reportId: ReportId;
+   "text": text;
+ };
+type AddPhotoRequest = 
+ record {
+   caption: text;
+   image: ExternalBlob;
+   uploaderName: text;
+ };
+type AddPhotoCommentRequest = 
+ record {
+   authorName: text;
+   photoId: nat;
+   "text": text;
+ };
+type AddDansalRequest = 
+ record {
+   category: text;
+   contactName: text;
+   contactPhone: text;
+   date: text;
+   district: text;
+   foodTypes: vec text;
+   latitude: float64;
+   locationLink: text;
+   longitude: float64;
+   organizerName: text;
+   province: text;
+   time: text;
+ };
+type AddCommentRequest = 
+ record {
+   authorName: text;
+   dansalId: nat;
+   "text": text;
+ };
+service : {
+  _immutableObjectStorageBlobsAreLive: (hashes: vec blob) -> (vec bool) query;
+  _immutableObjectStorageBlobsToDelete: () -> (vec blob) query;
+  _immutableObjectStorageConfirmBlobDeletion: (blobs: vec blob) -> ();
+  _immutableObjectStorageCreateCertificate: (blobHash: text) ->
+   (_ImmutableObjectStorageCreateCertificateResult);
+  _immutableObjectStorageRefillCashier: (refillInformation:
+   opt _ImmutableObjectStorageRefillInformation) ->
+   (_ImmutableObjectStorageRefillResult);
+  _immutableObjectStorageUpdateGatewayPrincipals: () -> ();
+  actionReport: (id: ReportId) -> (variant {
+                                     err: text;
+                                     ok;
+                                   });
+  addComment: (req: AddCommentRequest) -> (Comment);
+  addDansal: (req: AddDansalRequest) -> (Dansal);
+  addGalleryPhoto: (req: AddPhotoRequest) -> (GalleryPhoto);
+  addPhotoComment: (req: AddPhotoCommentRequest) ->
+   (variant {
+      err: text;
+      ok: PhotoComment;
+    });
+  addReportNote: (req: AddReportNoteRequest) ->
+   (variant {
+      err: text;
+      ok: NoteId;
+    });
+  addReview: (req: AddReviewRequest) -> (variant {
+                                           err: text;
+                                           ok: Review;
+                                         });
+  appreciateDansal: (id: DansalId) -> (bool);
+  appreciatePhoto: (id: PhotoId) -> (bool);
+  approveDansal: (id: DansalId) -> (variant {
+                                      err: text;
+                                      ok;
+                                    });
+  approvePhoto: (id: PhotoId) -> (variant {
+                                    err: text;
+                                    ok;
+                                  });
+  changeAdminPin: (oldPin: text, newPin: text) -> (variant {
+                                                     err: text;
+                                                     ok;
+                                                   });
+  deleteComment: (id: CommentId) -> (variant {
+                                       err: text;
+                                       ok;
+                                     });
+  deleteDansal: (id: DansalId) -> (variant {
+                                     err: text;
+                                     ok: bool;
+                                   });
+  deletePhotoComment: (id: PhotoCommentId) -> (variant {
+                                                 err: text;
+                                                 ok;
+                                               });
+  deleteReportNote: (noteId: NoteId) -> (variant {
+                                           err: text;
+                                           ok;
+                                         });
+  deleteReview: (id: ReviewId) -> (variant {
+                                     err: text;
+                                     ok;
+                                   });
+  deleteUser: (target: principal) -> (variant {
+                                        err: text;
+                                        ok;
+                                      });
+  dismissReport: (id: ReportId) -> (variant {
+                                      err: text;
+                                      ok;
+                                    });
+  filterDansals: (filter: DansalFilter) -> (vec Dansal) query;
+  getApprovalNotifications: () -> (vec ApprovalNotification) query;
+  getAverageRating: (dansalId: nat) -> (float64) query;
+  getComments: (dansalId: nat) -> (vec Comment) query;
+  getDansal: (id: DansalId) -> (opt Dansal);
+  getDansals: () -> (vec Dansal) query;
+  getGalleryPhotos: () -> (vec GalleryPhoto) query;
+  getMyDansalAnalytics: () -> (vec DansalAnalytics) query;
+  getMyDansals: () -> (vec Dansal) query;
+  getMyFavorites: () -> (vec nat) query;
+  getMyProfile: () -> (opt UserProfile) query;
+  getOrganizerProfile: ("principal": principal) ->
+   (opt OrganizerPublicProfile) query;
+  getPendingDansals: () -> (vec Dansal);
+  getPendingPhotos: () -> (vec GalleryPhoto);
+  getPhotoComments: (photoId: nat) -> (vec PhotoComment) query;
+  getReportNotes: (reportId: ReportId) -> (vec ReportNote) query;
+  getReviews: (dansalId: nat) -> (vec Review) query;
+  isDansalLiked: (dansalId: nat) -> (bool) query;
+  isFavorited: (dansalId: nat) -> (bool) query;
+  likePhoto: (id: PhotoId) -> (bool);
+  listDansals: () -> (vec Dansal) query;
+  listPhotos: () -> (vec GalleryPhoto) query;
+  listReports: () -> (vec Report);
+  listUsers: () -> (vec UserProfile);
+  markNotificationSeen: (id: nat) -> ();
+  registerUser: (displayName: text) -> (UserProfile);
+  rejectDansal: (id: DansalId) -> (variant {
+                                     err: text;
+                                     ok;
+                                   });
+  rejectPhoto: (id: PhotoId) -> (variant {
+                                   err: text;
+                                   ok;
+                                 });
+  setUserRole: (target: principal, role: Role) -> (variant {
+                                                     err: text;
+                                                     ok;
+                                                   });
+  submitReport: (req: SubmitReportRequest) -> (Report);
+  toggleDansalLike: (dansalId: nat) -> (LikeResult);
+  toggleFavorite: (dansalId: nat) -> (bool);
+  togglePhotoLike: (photoId: nat) -> (LikeResult);
+  updateDansal: (id: DansalId, req: UpdateDansalRequest) ->
+   (variant {
+      err: text;
+      ok: Dansal;
+    });
+  updateOrganizerBio: (bio: text) -> (variant {
+                                        err: text;
+                                        ok;
+                                      });
+  uploadPhoto: (req: AddPhotoRequest) -> (GalleryPhoto);
+  verifyAdminPin: (pin: text) -> (bool) query;
+}

@@ -1,0 +1,26 @@
+{
+  "overview": "Vesak Festival community dashboard — a mobile-first web app for Sri Lankan Vesak festival celebrations. Features Dansal registration with province/district filtering, lantern photo gallery with comments, social sharing, admin panel, approval workflows, and proximity notifications.",
+  "features": [
+    "Dansal registration and management with province, district, food category, and time filters",
+    "Distance-based sorting using device location",
+    "Lantern photo gallery with upload, likes, emoji reactions, and text comments",
+    "Social share buttons for Dansals (WhatsApp, Facebook, copy link)",
+    "Admin panel (PIN-protected) with approval workflow, reports, and user management",
+    "Organizer analytics, favourites list, and public organizer profiles",
+    "Vesak Poya countdown timer and category-based event map",
+    "Sinhala language throughout with mobile-safe keyboard handling"
+  ],
+  "category": "community",
+  "tags": [
+    "vesak",
+    "sri-lanka",
+    "sinhala",
+    "festival",
+    "community",
+    "dansal",
+    "gallery",
+    "pwa",
+    "mobile"
+  ],
+  "last_updated": "2026-05-11T13:59:18.321Z"
+}
